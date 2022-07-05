@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: mflix.api.daos.ProjectionTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 4.458 s <<< FAILURE! - in mflix.api.daos.ProjectionTest
+testProjectionShape(mflix.api.daos.ProjectionTest)  Time elapsed: 2.002 s  <<< ERROR!
+org.bson.codecs.configuration.CodecConfigurationException: Can't find a codec for class [Ljava.lang.String;.
+	at mflix.api.daos.ProjectionTest.testProjectionShape(ProjectionTest.java:53)
+
+testFindMoviesByCountry(mflix.api.daos.ProjectionTest)  Time elapsed: 0.005 s  <<< ERROR!
+org.bson.codecs.configuration.CodecConfigurationException: Can't find a codec for class [Ljava.lang.String;.
+	at mflix.api.daos.ProjectionTest.testFindMoviesByCountry(ProjectionTest.java:38)
+
