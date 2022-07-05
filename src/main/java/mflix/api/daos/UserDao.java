@@ -1,5 +1,6 @@
 package mflix.api.daos;
 
+import com.mongodb.ErrorCategory;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
 import com.mongodb.MongoWriteException;
@@ -67,13 +68,19 @@ public class UserDao extends AbstractMFlixDao {
      * @return True if successful, throw IncorrectDaoOperation otherwise
      */
     public boolean addUser(User user) {
-        //TODO > Ticket: Durable Writes -  you might want to use a more durable write concern here!
-        usersCollection.withWriteConcern(WriteConcern.MAJORITY).insertOne(user);
+        try {
+            usersCollection.withWriteConcern(WriteConcern.MAJORITY).insertOne(user);
+        } catch (MongoException e) {
+            log.error("An error ocurred while trying to insert a User.");
+            if (ErrorCategory.fromErrorCode(e.getCode()) == ErrorCategory.DUPLICATE_KEY) {
+                throw new IncorrectDaoOperation("The User is already in the database.");
+            }
+            return false;
+        }
         return true;
-        //TODO > Ticket: Handling Errors - make sure to only add new users
-        // and not users that already exist.
-
     }
+
+
 
     /**
      * Creates session using userId and jwt token.
